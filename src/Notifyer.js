@@ -6,7 +6,7 @@ const Notifyer = {
         }
     },
     notify({ title, description, icon }) {
-        new Notification(title, {
+        return () => new Notification(title, {
             body: description,
             icon
         });

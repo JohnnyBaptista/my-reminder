@@ -1,5 +1,5 @@
 import { View } from "./View.js";
-
+import { Emitter } from "./Emitter.js";
 const Timer = {
     time: 60 * 60,
     currentTime: 0,
@@ -12,13 +12,15 @@ const Timer = {
     countdown() {
         Timer.currentTime -= 1;
         if(Timer.currentTime === 0) {
+            Emitter.emit('countdown-end');
             clearInterval(Timer.interval);
         }
         const formmatedTime = Timer.fortmatTime(Timer.calculateTime(Timer.currentTime));
         View.render(formmatedTime);
     },
-
+    
     init(time) {
+        Emitter.emit('countdown-start');
         Timer.time = time * 60 || Timer.time;
         Timer.currentTime = Timer.time;
         Timer.interval = setInterval(Timer.countdown, 1000);
